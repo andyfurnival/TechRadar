@@ -8,7 +8,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <% include ../partials/head.ejs %>
+    <%- include("../partials/head.ejs") %>
 
     <script type="text/javascript" src="/lib/protovis-3.2/protovis-d3.2.js"></script>
     <script type="text/javascript" src="/radar.js" charset="utf-8"></script>
@@ -21,7 +21,7 @@
 
 <body onload="init(400,400,data);">
 
-<% include ../partials/menu.ejs %>
+<%- include("../partials/menu.ejs") %>
 
 <div tabindex="-1" id="content" class="site-header" style="margin-bottom: 10px">
     <div class="container">
@@ -82,7 +82,7 @@
 
 </div>
 
-<% include ../partials/footer.ejs %>
+<%- include("../partials/footer.ejs") %>
 
 </body>
 </html>

@@ -1,9 +1,11 @@
 /**
  * Helper function to perform base database operations (e.g. query, insert)
  */
+const pg = require('pg');
 const { Pool } = require('pg');
 const pool = new Pool({
     connectionString: process.env.DATABASE_URL,
+    ssl: { rejectUnauthorized: false },
 });
 
 
@@ -21,9 +23,10 @@ const DBHelper = function () {
 DBHelper.query = function (sql, parameters, done, error) {
     if (process.env.USE_SSL && process.env.USE_SSL.toLowerCase() !== 'false') {
         pg.defaults.ssl = true;
+
     }
 
-    //console.log("query:" + sql);
+    console.log("query:" + sql + " " + parameters);
     pool.connect(  (err, client, pdone) => {
 
         // Handle connection errors
@@ -36,8 +39,14 @@ DBHelper.query = function (sql, parameters, done, error) {
         }
         
         client.query(sql, parameters , (err,res)=> {
-            pdone();
-            done( res.rows );
+            pdone(err);
+
+            if (err) {
+                console.log(err.stack)
+                error(err);
+            } else {
+                done(res.rows);
+            }
         });
 
     });

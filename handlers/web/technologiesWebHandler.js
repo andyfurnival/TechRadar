@@ -4,7 +4,7 @@ const cache = require('../../dao/cache.js');
 const project = require('../../dao/projects');
 const technology = require('../../dao/technology');
 const usedThis = require('../../dao/usedThisTechnology');
-
+const { check, validationResult } = require('express-validator');
 const TechnologiesWebHandler = function () {
 };
 
@@ -21,18 +21,19 @@ TechnologiesWebHandler.add = function (req, res) {
 };
 
 TechnologiesWebHandler.edit = function (req, res) {
-    req.checkParams('id', 'Invalid technology id').isInt();
+    check('id', 'Invalid technology id').isInt();
 
-    const errors = req.validationErrors();
-    if (errors) {
-        res.redirect('/error');
+    const errors = validationResult(req)
+
+    if (!errors.isEmpty()) {
+        res.redirect('/error#1');
         return;
     }
-
+    console.log('userId: '+ req.user.id)
     const num = req.params.id;
     technology.getById(req.user.id, num, function (value) {
         if (value == null || value.length === 0 || value.length > 1) {
-            res.redirect('/error');
+            res.redirect('/error#2');
         } else {
 
             const statuses = cache.getStatuses();
@@ -46,18 +47,18 @@ TechnologiesWebHandler.edit = function (req, res) {
 };
 
 TechnologiesWebHandler.getVersions = function (req, res) {
-    req.checkParams('id', 'Invalid technology id').isInt();
+    check('id', 'Invalid technology id').isInt();
 
-    const errors = req.validationErrors();
-    if (errors) {
-        res.redirect('/error');
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        res.redirect('/error#3');
         return;
     }
 
     const num = req.params.id;
     technology.getById(req.user.id, num, function (value) {
         if (value == null || value.length === 0 || value.length > 1) {
-            res.redirect('/error');
+            res.redirect('/error#4');
         } else {
             res.render('pages/editVersions', {
                 technology: value,
@@ -68,11 +69,17 @@ TechnologiesWebHandler.getVersions = function (req, res) {
 };
 
 TechnologiesWebHandler.getTechnology = function (req, res) {
-    req.checkParams('id', 'Invalid technology id').isInt();
+    check('id', 'Invalid technology id').isInt();
 
-    const errors = req.validationErrors();
-    if (errors) {
-        res.redirect('/error');
+    const errors = validationResult(req)
+    console.info(
+        `validation results: ${JSON.stringify(
+            errors,
+        )}, is empty? ${errors.isEmpty()}`,
+    );
+
+    if (!errors.isEmpty()) {
+        res.redirect('/error#5');
         return;
     }
 
@@ -81,7 +88,7 @@ TechnologiesWebHandler.getTechnology = function (req, res) {
 
     technology.getById(req.user.id, num, function (value) {
         if (value == null || value.length === 0 || value.length > 1) {
-            res.redirect('/error');
+            res.redirect('/error#6');
         } else {
             const statuses = cache.getStatuses();
             const usedThisOptions = cache.getUsedThisTechOptions();
@@ -96,11 +103,11 @@ TechnologiesWebHandler.getTechnology = function (req, res) {
 };
 
 TechnologiesWebHandler.getUsers = function (req, res) {
-    req.checkParams('id', 'Invalid technology id').isInt();
+    check('id', 'Invalid technology id').isInt();
 
-    const errors = req.validationErrors();
-    if (errors) {
-        res.redirect('/error');
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        res.redirect('/error#7');
         return;
     }
 
@@ -110,7 +117,7 @@ TechnologiesWebHandler.getUsers = function (req, res) {
     technology.getById(req.user.id, num, function (value) {
         usedThis.getUsersForTechnology(num, null, function (users) {
             if (value == null || value.length === 0 || value.length > 1) {
-                res.redirect('/error');
+                res.redirect('/error#8');
             } else {
                 res.render('pages/technologyUsers', {
                     technology: value,
@@ -123,11 +130,11 @@ TechnologiesWebHandler.getUsers = function (req, res) {
 };
 
 TechnologiesWebHandler.getStatusHistory = function (req, res) {
-    req.checkParams('id', 'Invalid technology id').isInt();
+    check('id', 'Invalid technology id').isInt();
 
-    const errors = req.validationErrors();
-    if (errors) {
-        res.redirect('/error');
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        res.redirect('/error#9');
         return;
     }
 
@@ -136,7 +143,7 @@ TechnologiesWebHandler.getStatusHistory = function (req, res) {
     technology.getById(req.user.id, techId, function (value) {
 
         if (value == null || value.length === 0) {
-            res.redirect('/error');
+            res.redirect('/error#10');
         } else {
             res.render('pages/statushistory', {
                 technology: value,
@@ -147,11 +154,11 @@ TechnologiesWebHandler.getStatusHistory = function (req, res) {
 };
 
 TechnologiesWebHandler.getVotes = function (req, res) {
-    req.checkParams('id', 'Invalid technology id').isInt();
+    check('id', 'Invalid technology id').isInt();
 
-    const errors = req.validationErrors();
-    if (errors) {
-        res.redirect('/error');
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        res.redirect('/error#11');
         return;
     }
 
@@ -160,7 +167,7 @@ TechnologiesWebHandler.getVotes = function (req, res) {
     technology.getById(req.user.id, techId, function (value) {
 
         if (value == null || value.length === 0) {
-            res.redirect('/error');
+            res.redirect('/error#12');
         } else {
             res.render('pages/votehistory', {
                 technology: value,
@@ -171,11 +178,11 @@ TechnologiesWebHandler.getVotes = function (req, res) {
 };
 
 TechnologiesWebHandler.updateStatus = function (req, res) {
-    req.checkParams('id', 'Invalid technology id').isInt();
+    check('id', 'Invalid technology id').isInt();
 
-    const errors = req.validationErrors();
-    if (errors) {
-        res.redirect('/error');
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        res.redirect('/error#13');
         return;
     }
 
@@ -183,7 +190,7 @@ TechnologiesWebHandler.updateStatus = function (req, res) {
 
     technology.getById(req.user.id, techId, function (value) {
         if (value == null || value.length === 0) {
-            res.redirect('/error');
+            res.redirect('/error#14');
             return;
         }
 
@@ -197,11 +204,11 @@ TechnologiesWebHandler.updateStatus = function (req, res) {
 };
 
 TechnologiesWebHandler.addProject = function (req, res) {
-    req.checkParams('id', 'Invalid technology id').isInt();
+    check('id', 'Invalid technology id').isInt();
 
-    const errors = req.validationErrors();
-    if (errors) {
-        res.redirect('/error');
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        res.redirect('/error#15');
         return;
     }
 
@@ -209,7 +216,7 @@ TechnologiesWebHandler.addProject = function (req, res) {
 
     technology.getById(req.user.id, techId, function (technology) {
         if (technology === null) {
-            res.redirect('/error');
+            res.redirect('/error#16');
         } else {
             project.getAllForTechnology(techId, function (linkedProjects) {
 

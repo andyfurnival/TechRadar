@@ -16,7 +16,8 @@ const express = require('express');
 const helmet = require('helmet');
 const express_enforces_ssl = require('express-enforces-ssl');
 const helpers = require('express-helpers')();
-const expressValidator = require('express-validator');
+//const expressValidator = require('express-validator');
+const {check, validationResult} = require('express-validator')
 const flash = require('connect-flash');
 const session = require('express-session');
 const bodyParser = require('body-parser');
@@ -121,14 +122,16 @@ const TechRadar = function () {
         * Uses 7 out of 10 helmet middleware functions,
         * leaving out contentSecurityPolicy, hpkp, and noCache
         */
-        self.app.use(helmet()); 
-
+        //self.app.use(helmet());
+        self.app.use(helmet({
+            contentSecurityPolicy: false,
+        }));
         self.app.use(bodyParser.json());
         self.app.use(bodyParser.urlencoded({
             extended: true
         }));
 
-        self.app.use(expressValidator());
+        //self.app.use(expressValidator());
         self.app.use(flash());
 
         self.app.use(function(err, req, res, next) {
@@ -149,7 +152,7 @@ const TechRadar = function () {
             self.app.use(express_enforces_ssl());
             sess.cookie.secure = true;
          }
- 
+
         self.app.use(session(sess));
 
         // Setup the Google Analytics ID if defined

@@ -6,7 +6,7 @@ const technology = require('../../dao/technology');
 const apiUtils = require('./apiUtils.js');
 const sanitizer = require('sanitize-html');
 const projectValidator = require('../../shared/validators/projectValidator.js');
-
+const { check, validationResult } = require('express-validator');
 const ProjectsApiHandler = function () {
 };
 
@@ -85,11 +85,11 @@ ProjectsApiHandler.updateTechnologyVersion = function (req, res) {
     const versionId = sanitizer(req.body.version);
     const linkId = sanitizer(req.params.linkId);
     
-    req.checkParams('linkId', 'Invalid technology-project link ID').isInt();
+    check('linkId', 'Invalid technology-project link ID').isInt();
     req.checkBody('version', 'Invalid version ID').isInt();
 
-    const errors = req.validationErrors();
-    if (errors) {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
         res.end(JSON.stringify({success: false, error: errors}));
         return;
     }

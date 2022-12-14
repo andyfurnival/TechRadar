@@ -13995,7 +13995,8 @@ pv.Layout.Bullet = function() {
       x;
 
   /** @private Cache layout state to optimize properties. */
-  this.buildImplied = function(s) {
+  this.buildImp
+  lied = function(s) {
     buildImplied.call(this, x = s);
     orient = s.orient;
     horizontal = /^left|right$/.test(orient);

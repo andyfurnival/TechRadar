@@ -8,13 +8,13 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <% include ../partials/head.ejs %>
+    <%- include("../partials/head.ejs") %>
 
 </head>
 
 <body>
 
-<% include ../partials/menu.ejs %>
+<%- include("../partials/menu.ejs") %>
 
 <%
 getBreadcrumb = function () {
@@ -22,7 +22,7 @@ getBreadcrumb = function () {
 }
 %>
 
-<% include ../partials/technology-head.ejs %>
+<%- include("../partials/technology-head.ejs") %>
 <% if(user.canEdit) { %>
 <div class="navbar navbar-custom navbar-inverse navbar-static-top" id="nav">
     <div class="container">
@@ -185,7 +185,7 @@ getBreadcrumb = function () {
     </row>
 </div>
 
-<% include ../partials/footer.ejs %>
+<%- include("../partials/footer.ejs") %>
 
 <script src="/comments.js"></script>
 <script src="/avatar.js"></script>

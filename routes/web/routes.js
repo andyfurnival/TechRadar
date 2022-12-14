@@ -6,7 +6,7 @@
 const technology = require('../../dao/technology.js');
 const passport = require('passport');
 const security = require('../../utils/security');
-
+const { check, validationResult } = require('express-validator');
 
 const Routes = function () {
 };
@@ -71,10 +71,10 @@ Routes.createRoutes = function (self) {
     });
 
     self.app.get('/mindmap/project/:project', security.isAuthenticated, function (req, res) {
-        req.checkParams('project', 'Invalid project name').isAlpha();
+        check('project', 'Invalid project name').isAlpha();
 
-        const errors = req.validationErrors();
-        if (errors) {
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
             res.redirect('/error');
             return;
         }

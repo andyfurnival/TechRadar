@@ -1,7 +1,7 @@
 "use strict";
 
 const users = require('../../dao/users');
-
+const { check, validationResult } = require('express-validator');
 const UsersWebHandler = function () {
 };
 
@@ -18,10 +18,10 @@ UsersWebHandler.editProfile = function (req, res) {
 };
 
 UsersWebHandler.editUser = function (req, res) {
-    req.checkParams('userId', 'Invalid user id').isInt();
+    check('userId', 'Invalid user id').isInt();
 
-    const errors = req.validationErrors();
-    if (errors) {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
         res.redirect('/error');
         return;
     }

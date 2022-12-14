@@ -38,7 +38,7 @@ var nextPage = currentPage < pageCount - 1 ? 'TechRadar.getComments('+technology
         var comment = comments[i];
     %>
 
-    <% include ../partials/comment.ejs %>
+    <%- include("../partials/comment.ejs") %>
 
     <% } %>
 

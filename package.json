@@ -56,7 +56,9 @@
     "sanitize-html": "latest",
     "sinon": "latest"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "cpu-features": "0.0.4"
+  },
   "bundleDependencies": [],
   "private": true,
   "main": "server.js"

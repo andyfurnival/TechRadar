@@ -1,7 +1,7 @@
 "use strict";
 
 const dbHelper = require('../utils/dbhelper.js');
-
+const debug = require('debug')('radar:server');
 const Vote = function () {
 };
 
@@ -169,6 +169,7 @@ Vote.getVotesPerUserCount = function (done) {
  */
 Vote.add = function (technology, status, userid, done) {
 
+    debug('userId: ' + userid)
 
     dbHelper.query("SELECT id FROM votes WHERE technology=$1 and userid=$2", [technology, userid],
         function (selectResult) {

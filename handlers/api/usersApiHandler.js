@@ -9,7 +9,7 @@ const crypto = require('crypto');
 const userValidator  = require('../../shared/validators/userValidator.js');
 const mailer = require('../../mailer/mailer');
 
-
+const debug = require('debug')('radar:server');
 const UsersApiHandler = function () {
 };
 
@@ -81,6 +81,9 @@ UsersApiHandler.updateProfile = function (req, res) {
         apiutils.handleResultSet(res, null, validationResult.message);
         return;
     }
+
+    debug('userId: '+ req.user.id)
+    console.log('userId: '+ req.user.id)
 
     users.findById(req.user.id, function (error, userFromDb) {
         if(error) {

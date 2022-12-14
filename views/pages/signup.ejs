@@ -8,19 +8,19 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <% include ../partials/head.ejs %>
+    <%- include("../partials/head.ejs") %>
 
     <script type="text/javascript" src="/utils.js" charset="utf-8"></script>
 </head>
 
 <body>
 
-<% include ../partials/menu-logged-out.ejs %>
+<%- include("../partials/menu-logged-out.ejs") %>
 
 <div tabindex="-1" id="content" class="site-header" style="margin-bottom: 60px">
     <div class="container">
         <h1 >Technology radar</h1>
-        <p>Community technology planning</p>
+        <p>Flutter International technology planning</p>
     </div>
 </div>
 <div class="container bs-docs-container">
@@ -66,7 +66,7 @@
 
 </div><!-- /.container -->
 
-<% include ../partials/footer.ejs %>
+<%- include("../partials/footer.ejs") %>
 <script src="/shared/validators/userValidator.js"></script>
 <script src="/addUserRequest.js" id="addUserRequest" request-url="/api/user/signup" redirect-success-url="/login"></script>
 </body>

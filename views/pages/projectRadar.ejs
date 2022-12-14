@@ -8,7 +8,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <% include ../partials/head.ejs %>
+    <%- include("../partials/head.ejs") %>
 
     <script type="text/javascript" src="/lib/protovis-3.2/protovis-d3.2.js"></script>
     <script type="text/javascript" src="/radar.js" charset="utf-8"></script>
@@ -21,7 +21,7 @@
 
 <body onload="init(400,400,data);">
 
-<% include ../partials/menu.ejs %>
+<%- include("../partials/menu.ejs") %>
 
 <div tabindex="-1" id="content" class="site-header">
     <div class="container">
@@ -59,7 +59,7 @@
         </ol>
     </div>
     
-    <% include ../partials/apply-changes-btn.ejs %>
+    <%- include("../partials/apply-changes-btn.ejs") %>
 
     <div class="row top-buffer">
         <div class="col-sm-6">
@@ -128,7 +128,7 @@
                     <% } %>
                     
                     <% if(technology.id) { %>
-                        <% include ../partials/software-versions.ejs %>
+                        <%- include("../partials/software-versions.ejs", {technology: technology}) %>
                     <% } %>
                     
                 </li>
@@ -148,8 +148,8 @@
 
 </div>
 
-<% include ../partials/footer.ejs %>
-<% include ../partials/software-versions-footer.ejs %>
+<%- include("../partials/footer.ejs") %>
+<%- include("../partials/software-versions-footer.ejs") %>
 <script type="text/javascript">
 
     var originalVersionIds = [];

@@ -2,7 +2,7 @@
 
 const projects = require('../../dao/projects');
 const technology = require('../../dao/technology');
-
+const { check, validationResult } = require('express-validator');
 const ProjectsWebHandler = function () {
 };
 
@@ -11,10 +11,10 @@ ProjectsWebHandler.add = function (req, res) {
 };
 
 ProjectsWebHandler.edit = function (req, res) {
-    req.checkParams('projectId', 'Invalid project id').isInt();
+    check('projectId', 'Invalid project id').isInt();
 
-    const errors = req.validationErrors();
-    if (errors) {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
         res.redirect('/error');
         return;
     }
@@ -30,10 +30,10 @@ ProjectsWebHandler.edit = function (req, res) {
 };
 
 ProjectsWebHandler.addTechnology = function (req, res) {
-    req.checkParams('projectId', 'Invalid project id').isInt();
+    check('projectId', 'Invalid project id').isInt();
 
-    const errors = req.validationErrors();
-    if (errors) {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
         res.redirect('/error');
         return;
     }
@@ -48,10 +48,10 @@ ProjectsWebHandler.addTechnology = function (req, res) {
 };
 
 ProjectsWebHandler.removeTechnology = function (req, res) {
-    req.checkParams('projectId', 'Invalid project id').isInt();
+    check('projectId', 'Invalid project id').isInt();
 
-    const errors = req.validationErrors();
-    if (errors) {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
         res.redirect('/error');
         return;
     }
@@ -66,10 +66,10 @@ ProjectsWebHandler.removeTechnology = function (req, res) {
 };
 
 ProjectsWebHandler.showRadar = function (req, res) {
-    req.checkParams('projectId', 'Invalid project id').isInt();
+    check('projectId', 'Invalid project id').isInt();
 
-    const errors = req.validationErrors();
-    if (errors) {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
         res.redirect('/error');
         return;
     }

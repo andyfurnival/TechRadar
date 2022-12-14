@@ -8,16 +8,16 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <% include ../partials/head.ejs %>
+    <%- include("../partials/head.ejs") %>
 
     <script type="text/javascript" src="/utils.js" charset="utf-8"></script>
 </head>
 
 <body>
 
-<% include ../partials/menu.ejs %>
+<%- include("../partials/menu.ejs") %>
 
-<% include ../partials/technology-head.ejs %>
+<%- include("../partials/technology-head.ejs") %>
 
 <div class="container bs-docs-container">
     <div class="col-md-12">
@@ -92,7 +92,7 @@
 
     </div>
 </div><!-- /.container -->
-<% include ../partials/footer.ejs %>
+<%- include("../partials/footer.ejs") %>
 <script src="/shared/validators/technologyValidator.js"></script>
 
 <script>

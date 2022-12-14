@@ -10,7 +10,7 @@ const cache = require('../../dao/cache');
 const apiUtils = require('./apiUtils');
 const sanitizer = require('sanitize-html');
 const technologyValidator = require('../../shared/validators/technologyValidator');
-
+const debug = require('debug')('radar:server');
 
 const TechnologyApiHandler = function () {
 };
@@ -23,12 +23,18 @@ const TechnologyApiHandler = function () {
 TechnologyApiHandler.addVote = function (req, res) {
     const tech = sanitizer(req.params.technology);
     const statusName = sanitizer(req.body.statusname);
-    const userId = sanitizer(req.user.id);
+    //const userId = sanitizer(req.user.id);
+
+    debug('userId: ' + req.user.id)
+
+    console.log('tech: '+ tech)
+    console.log('statusName: '+ statusName)
+    console.log('userId: '+ req.user.id)
 
     const status = cache.getStatus( statusName );
     const statusValue = status.id;
 
-    votes.add(tech, statusValue, userId, function (result, error) {
+    votes.add(tech, statusValue, req.user.id, function (result, error) {
         res.writeHead(200, {"Content-Type": "application/json"});
         if (error != null) {
             res.end(JSON.stringify({success: false, error: error}));
@@ -46,9 +52,9 @@ TechnologyApiHandler.addVote = function (req, res) {
 TechnologyApiHandler.addUsedThisTechnologyVote = function (req, res) {
     const tech = sanitizer(req.params.technology);
     const daysAgo = sanitizer(req.body.daysAgo);
-    const userId = sanitizer(req.user.id);
+    //const userId = sanitizer(req.user.id);
 
-    usedThisVotes.add(tech, daysAgo, userId, function (result, error) {
+    usedThisVotes.add(tech, daysAgo, req.user.id, function (result, error) {
         res.writeHead(200, {"Content-Type": "application/json"});
         if (error != null) {
             res.end(JSON.stringify({success: false, error: error}));
@@ -66,6 +72,7 @@ TechnologyApiHandler.addUsedThisTechnologyVote = function (req, res) {
 TechnologyApiHandler.getTechnologies = function (req, res) {
     const search = req.query.search;
 
+    console.log('userId: '+ req.user.id)
     if (search == null) {
         technology.getAll(req.user.id, function (result) {
             res.writeHead(200, {"Content-Type": "application/json"});

@@ -46,8 +46,8 @@ SoftwareVersionsApiHandler.updateVersion = function (req, res) {
     req.checkBody('version', 'Invalid version ID').isInt();
     req.checkBody('name', 'Empty name').notEmpty();
 
-    const errors = req.validationErrors();
-    if (errors) {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
         res.end(JSON.stringify({success: false, error: errors}));
         return;
     }

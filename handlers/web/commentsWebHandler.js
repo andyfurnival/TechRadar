@@ -3,7 +3,7 @@
 const comments = require('../../dao/comments');
 const technology = require('../../dao/technology');
 const markdown = require( "markdown" ).markdown;
-
+const { check, validationResult } = require('express-validator');
 const PAGE_SIZE = 10;
 
 const CommentsWebHandler = function () {
@@ -15,14 +15,15 @@ const CommentsWebHandler = function () {
  * @param res
  */
 CommentsWebHandler.add = function (req, res) {
-    req.checkParams('id', 'Invalid comment id').isInt();
+    check('id', 'Invalid comment id').isInt();
 
-    const errors = req.validationErrors();
-    if (errors) {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
         res.redirect('/error');
         return;
     }
 
+    console.log('userId: '+ req.user.id)
     const num = req.params.id;
     technology.getById(req.user.id, num, function (value) {
         res.render('pages/addComment', {technology: value, user: req.user});
@@ -35,11 +36,11 @@ CommentsWebHandler.add = function (req, res) {
  * @param res
  */
 CommentsWebHandler.commentsForTechnology = function (req, res) {
-    req.checkParams('technologyId', 'Invalid technology id').isInt();
-    req.checkParams('page', 'Invalid page number').isInt();
+    check('technologyId', 'Invalid technology id').isInt();
+    check('page', 'Invalid page number').isInt();
 
-    const errors = req.validationErrors();
-    if (errors) {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
         res.redirect('/error');
         return;
     }
