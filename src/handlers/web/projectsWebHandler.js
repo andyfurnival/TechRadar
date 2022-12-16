@@ -7,7 +7,7 @@ const ProjectsWebHandler = function () {
 };
 
 ProjectsWebHandler.add = function (req, res) {
-    res.render('pages/admin/addProject', {user: req.user});
+    res.render('pages/admin/addProject', {user: req.user, env: process.env});
 };
 
 ProjectsWebHandler.edit = function (req, res) {
@@ -24,7 +24,7 @@ ProjectsWebHandler.edit = function (req, res) {
             res.redirect('/error');
             return;
         } else {
-            res.render('pages/admin/editProject', {user: req.user, project: project});
+            res.render('pages/admin/editProject', {user: req.user, project: project, env: process.env});
         }
     });
 };
@@ -42,7 +42,7 @@ ProjectsWebHandler.addTechnology = function (req, res) {
         if (error) {
             res.redirect('/error');
         } else {
-            res.render('pages/addTechnologyToProject', {user: req.user, project: project});
+            res.render('pages/addTechnologyToProject', {user: req.user, project: project, env: process.env});
         }
     });
 };
@@ -60,7 +60,7 @@ ProjectsWebHandler.removeTechnology = function (req, res) {
         if (error) {
             res.redirect('/error');
         } else {
-            res.render('pages/removeTechnologyFromProject', {user: req.user, project: project});
+            res.render('pages/removeTechnologyFromProject', {user: req.user, project: project, env: process.env});
         }
     });
 };
@@ -87,7 +87,8 @@ ProjectsWebHandler.showRadar = function (req, res) {
                     res.render('pages/projectRadar', {
                         user: req.user,
                         project: project,
-                        technologies: technologies
+                        technologies: technologies,
+                        env: process.env
                     });
                 }
             });
@@ -101,7 +102,7 @@ ProjectsWebHandler.list = function (req, res) {
     let name = req.query.name;
 
     if( name==undefined) {
-        res.render('pages/searchProjects', {user: req.user});
+        res.render('pages/searchProjects', {user: req.user, env: process.env});
     } else {
         name = decodeURI(name);
 

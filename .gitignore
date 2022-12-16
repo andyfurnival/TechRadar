@@ -5,3 +5,5 @@ uploads/
 .vscode/
 .eslintrc.json
 launch.json
+/build/
+.npmrc

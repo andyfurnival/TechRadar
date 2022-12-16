@@ -10,7 +10,7 @@ const CategoriesWebHandler = function () {
  * List all categories
  */
 CategoriesWebHandler.listCategories = function (req, res) {
-    res.render('pages/admin/listCategories', {user: req.user});
+    res.render('pages/admin/listCategories', {user: req.user, env: process.env});
 };
 
 /**
@@ -19,7 +19,7 @@ CategoriesWebHandler.listCategories = function (req, res) {
  * @param res
  */
 CategoriesWebHandler.addCategory = function (req, res) {
-    res.render('pages/admin/addCategory', {user: req.user});
+    res.render('pages/admin/addCategory', {user: req.user, env: process.env});
 };
 
 /**
@@ -33,7 +33,7 @@ CategoriesWebHandler.technologiesForCategory = function (req, res) {
     technology.getAllForCategory(cname.toLowerCase(), function (values) {
 
         const category = cache.getCategory(cname);
-        res.render('pages/categoryRadar', {category: category, technologies: values, user: req.user});
+        res.render('pages/categoryRadar', {category: category, technologies: values, user: req.user, env: process.env});
     });
 };
 

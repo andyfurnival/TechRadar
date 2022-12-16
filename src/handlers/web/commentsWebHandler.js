@@ -26,7 +26,7 @@ CommentsWebHandler.add = function (req, res) {
     console.log('userId: '+ req.user.id)
     const num = req.params.id;
     technology.getById(req.user.id, num, function (value) {
-        res.render('pages/addComment', {technology: value, user: req.user});
+        res.render('pages/addComment', {technology: value, user: req.user, env: process.env});
     });
 };
 
@@ -60,7 +60,8 @@ CommentsWebHandler.commentsForTechnology = function (req, res) {
                 count: countData.count,
                 pageSize: PAGE_SIZE,
                 currentPage: pageNumber,
-                technologyId: techId
+                technologyId: techId,
+                env: process.env
             });
         });
     });

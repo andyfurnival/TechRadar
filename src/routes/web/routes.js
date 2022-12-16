@@ -27,7 +27,7 @@ Routes.createRoutes = function (self) {
                 res.redirect(url);
             }
             else {
-                res.render('pages/index', {user: req.user});
+                res.render('pages/index', {user: req.user, env: process.env});
             }
         });
 
@@ -37,9 +37,9 @@ Routes.createRoutes = function (self) {
     self.app.get('/error',
         function (req, res) {
             if (req.isAuthenticated()) {
-                res.render('pages/errorLoggedIn', {user: req.user});
+                res.render('pages/errorLoggedIn', {user: req.user, env: process.env});
             } else {
-                res.render('pages/error');
+                res.render('pages/error',{env: process.env});
             }
         });
 
@@ -48,10 +48,10 @@ Routes.createRoutes = function (self) {
      */
     self.app.get('/login', function (req, res) {
         if (req.isAuthenticated()) {
-            res.render('pages/index')
+            res.render('pages/index',{env: process.env})
         } else {
             const messages = req.flash('error');
-            res.render('pages/login', {messages: messages});
+            res.render('pages/login', {messages: messages, env: process.env});
         }
     });
 
@@ -60,14 +60,14 @@ Routes.createRoutes = function (self) {
      */
     self.app.get('/signup', function (req, res) {
         if (req.isAuthenticated()) {
-            res.render('pages/index');
+            res.render('pages/index',{env: process.env});
         } else {
-            res.render('pages/signup');
+            res.render('pages/signup',{env: process.env});
         }
     });
 
     self.app.get('/dashboard', security.isAuthenticated, function (req, res) {
-        res.render('pages/dashboards/dashboard', {user: req.user});
+        res.render('pages/dashboards/dashboard', {user: req.user, env: process.env});
     });
 
     self.app.get('/mindmap/project/:project', security.isAuthenticated, function (req, res) {
@@ -86,7 +86,7 @@ Routes.createRoutes = function (self) {
                 console.log(error);
                 res.redirect('/error');
             } else {
-                res.render('pages/dashboards/mindmap', {user: req.user, data: result});
+                res.render('pages/dashboards/mindmap', {user: req.user, data: result, env: process.env});
             }
         });
 
