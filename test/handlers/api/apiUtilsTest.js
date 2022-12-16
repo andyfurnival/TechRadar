@@ -2,11 +2,11 @@ var sinon = require('sinon');
 var chai = require('chai');
 var expect = chai.expect;
 
-var cache = require('../../../dao/cache.js');
-var category = require('../../../dao/category.js');
-var technology = require('../../../dao/technology.js');
+var cache = require('../../../src/dao/cache.js');
+var category = require('../../../src/dao/category.js');
+var technology = require('../../../src/dao/technology.js');
 
-var apiUtils = require('../../../handlers/api/apiUtils.js');
+var apiUtils = require('../../../src/handlers/api/apiUtils.js');
 
 
 describe("apiUtils", function() {

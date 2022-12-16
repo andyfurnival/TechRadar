@@ -22,7 +22,7 @@ const DBHelper = function () {
  */
 DBHelper.query = function (sql, parameters, done, error) {
     if (process.env.USE_SSL && process.env.USE_SSL.toLowerCase() !== 'false') {
-        pg.defaults.ssl = true;
+
 
     }
 

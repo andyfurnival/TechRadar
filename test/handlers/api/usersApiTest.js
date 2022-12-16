@@ -2,13 +2,13 @@ var sinon = require('sinon');
 var chai = require('chai');
 var expect = chai.expect;
 
-var users = require('../../../dao/users.js');
-var apiutils = require('../../../handlers/api/apiUtils.js');
-var userValidator  = require('../../../shared/validators/userValidator.js');
+var users = require('../../../src/dao/users.js');
+var apiutils = require('../../../src/handlers/api/apiUtils.js');
+var userValidator  = require('../../../src/shared/validators/userValidator.js');
 process.env.MAILER = 'stub';
-var mailer = require('../../../mailer/mailer');
+var mailer = require('../../../src/mailer/mailer');
 
-var apiUsers = require('../../../handlers/api/usersApiHandler.js');
+var apiUsers = require('../../../src/handlers/api/usersApiHandler.js');
 var crypto = require('crypto');
 
 

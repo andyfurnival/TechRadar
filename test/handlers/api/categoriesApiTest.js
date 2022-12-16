@@ -2,11 +2,11 @@ var sinon = require('sinon');
 var chai = require('chai');
 var expect = chai.expect;
 
-var cache = require('../../../dao/cache.js');
-var category = require('../../../dao/category.js');
-var apiutils = require('../../../handlers/api/apiUtils.js');
+var cache = require('../../../src/dao/cache.js');
+var category = require('../../../src/dao/category.js');
+var apiutils = require('../../../src/handlers/api/apiUtils.js');
 
-var apiCategories = require('../../../handlers/api/categoriesApiHandler.js');
+var apiCategories = require('../../../src/handlers/api/categoriesApiHandler.js');
 
 
 describe("Categories api handler", function() {

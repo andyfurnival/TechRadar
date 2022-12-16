@@ -70,7 +70,7 @@ To enable Azure AD sign-in, set the following environment variables:
 If these are not defined AD integration is turned off
 
 To learn more about the above values, click [here](https://azure.microsoft.com/en-us/documentation/articles/active-directory-b2c-reference-oidc/#get-a-token).
-Additional Azure AD settings can be found in [configAzureAD.js](utils/configAzureAD.js)
+Additional Azure AD settings can be found in [configAzureAD.js](src/utils/configAzureAD.js)
 
 ## Installation
 

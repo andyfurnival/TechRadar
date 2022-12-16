@@ -2,7 +2,7 @@ var sinon = require('sinon');
 var chai = require('chai');
 var expect = chai.expect;
 
-var validator = require('../../../shared/validators/technologyValidator.js');
+var validator = require('../../../src/shared/validators/technologyValidator.js');
 
 describe("technologyValidator", function() {
     describe("validateTechnologyName", function() {

@@ -16,8 +16,7 @@ const express = require('express');
 const helmet = require('helmet');
 const express_enforces_ssl = require('express-enforces-ssl');
 const helpers = require('express-helpers')();
-//const expressValidator = require('express-validator');
-const {check, validationResult} = require('express-validator')
+
 const flash = require('connect-flash');
 const session = require('express-session');
 const bodyParser = require('body-parser');
@@ -30,6 +29,7 @@ const users = require('./dao/users');
 const passport = require('passport');
 require('./utils/passport.js');
 
+const path = require('path');
 
 // Load the routes for the web Application and API REST services
 const routes = require('./routes/web/routes.js');
@@ -113,6 +113,11 @@ const TechRadar = function () {
 
         self.app = express();
 
+        if (process.env.NODE_ENV !== 'production') {
+            //
+        }
+
+        self.app.set('views', path.join(__dirname, '/views'));
         self.app.set('view engine', 'ejs');
 
         // Define helper functions
@@ -163,7 +168,7 @@ const TechRadar = function () {
         
         // Browser Cache
         const oneDay = 86400000;
-        self.app.use('/', express.static('public', {maxAge: oneDay}));
+        self.app.use('/', express.static(__dirname + '/public', {maxAge: oneDay}));
         self.app.use('/shared', express.static('shared', {maxAge: oneDay}));
 
         // Initialize Passport and restore authentication state, if any, from the

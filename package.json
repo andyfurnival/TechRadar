@@ -3,7 +3,17 @@
   "version": "1.0.0",
   "description": "Prototype Tech Radar",
   "scripts": {
-    "test": "mocha"
+    "test": "mocha",
+    "clean": "rimraf dist",
+    "mkdirs": "mkdir -p dist",
+    "js:dev": "babel src  > dist/app.js",
+    "js:prod": "babel src | uglifyjs -m -c > dist/app.js",
+    "prebuild:dev": "npm run clean && npm run mkdirs",
+    "build:dev": " npm run js:dev",
+    "prebuild:prod": "npm run clean && npm run mkdirs",
+    "build:prod": "npm run js:prod",
+    "zip": "cd dist && zip -r -X ../app.zip .",
+    "start": "node ./server.js"
   },
   "keywords": [
     "Node.js",
@@ -15,11 +25,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://git.heroku.com/techradar-demo.git"
+    "url": "https://github.com/andyfurnival/TechRadar.git"
   },
   "engines": {
-    "node": "10.13.0",
-    "npm": "6.4.1"
+    "node": "16.17.0",
+    "npm": "6.14.15"
   },
   "dependencies": {
     "async": "latest",
@@ -29,7 +39,7 @@
     "chart.js": "^2.8.0",
     "connect-flash": "latest",
     "console-stamp": "latest",
-    "crypto": "latest",
+    "cpu-features": "0.0.4",
     "db-migrate": "latest",
     "db-migrate-pg": "latest",
     "debug": "latest",
@@ -41,6 +51,7 @@
     "express-session": "latest",
     "express-validator": "latest",
     "helmet": "latest",
+    "https-browserify": "^1.0.0",
     "markdown": "latest",
     "mocha": "latest",
     "multer": "latest",
@@ -54,12 +65,35 @@
     "pg": "latest",
     "pg-large-object": "latest",
     "sanitize-html": "latest",
-    "sinon": "latest"
+    "sinon": "latest",
+    "stream-http": "^3.2.0",
+    "util": "^0.12.5"
   },
   "devDependencies": {
-    "cpu-features": "0.0.4"
+    "grunt": "~1.5.3",
+    "grunt-contrib-compress": "^2.0.0",
+    "grunt-contrib-copy": "^1.0.0",
+    "grunt-contrib-jshint": "~3.2.0",
+    "grunt-contrib-nodeunit": "~4.0.0",
+    "grunt-contrib-uglify": "^5.2.2",
+    "grunt-ejs": "^1.0.0"
+  },
+  "overrides": {
+    "cpu-features": "0.0.4",
+    "db-migrate": {
+      "tunnel-ssh": {
+        "ssh2": {
+          "cpu-features": "0.0.4"
+        }
+      }
+    }
   },
   "bundleDependencies": [],
   "private": true,
-  "main": "server.js"
+  "main": "src/server.js",
+  "browser": {
+    "crypto": false,
+    "stream": false,
+    "assert": false
+  }
 }

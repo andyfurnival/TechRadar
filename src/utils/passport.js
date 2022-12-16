@@ -124,7 +124,7 @@ if (process.env.AZURE_IDENTITY_METADATA) {
     log.info("Registering a new user with email: " + profileJson.email);
     var email = profileJson.email || profileJson.unique_name;
     // password is required, so we need to provide one even when the true password is handled by ADFS
-    var randomPassword = require('crypto').randomBytes(256).toString();
+    var randomPassword = crypto.randomBytes(256).toString();
     var newUser = new User(null, profileJson.unique_name, email, profileJson.name, randomPassword, null, 2, true);
     users.add(newUser, function (userId, error) {
       log.info("Getting user with id = " + userId + " from the database");

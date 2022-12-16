@@ -2,7 +2,7 @@ var sinon = require('sinon');
 var chai = require('chai');
 var expect = chai.expect;
 
-var webUsers = require('../../../handlers/web/usersWebHandler.js');
+var webUsers = require('../../../src/handlers/web/usersWebHandler.js');
 
 describe("Users web handler", function() {
     var req, res;

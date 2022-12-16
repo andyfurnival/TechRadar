@@ -8,14 +8,14 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <%- include("../partials/head.ejs") %>
+    <%- include("../../../partials/head.ejs") %>
 
     <script type="text/javascript" src="/utils.js" charset="utf-8"></script>
 </head>
 
 <body>
 
-<%- include("../partials/menu.ejs") %>
+<%- include("../../../partials/menu.ejs") %>
 
 <div tabindex="-1" id="content" class="site-header">
     <div class="container">
@@ -45,34 +45,37 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="email">Contact email</label>
-                            <span class="glyphicon glyphicon-info-sign" aria-hidden="true" title="Changing your contact email will NOT affect your third-party login credentials"></span>
-                            <input type="text" class="form-control" id="email"
-                                   name="email" placeholder="Email" value="<%= editUser.email %>"
-                                   required maxlength="100">
-                        </div>
 
-                        <div class="form-group">
-                            <label for="oldPassword">Old password</label>
-                            <input type="password" class="form-control" id="oldPassword" name="oldPassword"
-                                   placeholder="Old password" maxlength="100">
-                        </div>
+                            <div class="form-group">
+                                <label for="role">Account type:</label>
+                                <select class="form-control" id="role" name="role">
+                                    <% roles.forEach( function(role) { %>
+                                    <option value="<%=role.id%>" <%= editUser.role === role.id ? 'selected' : '' %>><%=role.name%></option>
+                                    <% }); %>
+                                </select>
+                            </div>
+                            <input type="hidden" id="userId" name="userId" value="<%= editUser.id %>">
 
-
-                        <div class="form-group">
+                            <label for="email">New email</label>
+                            <input type="text" class="form-control" id="email" name="email"
+                                   placeholder="New email" value="<%= editUser.email %>" required maxlength="100">
                             <label for="password">New password</label>
                             <input type="password" class="form-control" id="password" name="password"
                                    placeholder="New password" maxlength="100">
                             <div class="form-group">
                                 <label for="confirmPassword">Confirm password</label>
                                 <input type="password" class="form-control" id="confirmPassword"
-                                       name="confirmPassword" placeholder="Confirm password">
+                                       name="confirmPassword" placeholder="Confirm password" maxlength="100">
+                            </div>
+                            <div class="form-group">
+                                <label for="enabled">Account enabled</label>
+                                <input type="checkbox" id="enabled" name="enabled" <%= editUser.enabled == true ? 'checked' : '' %> />
                             </div>
                         </div>
                     </div>
                     <div class="col-md-5 col-sm-5 hidden-xs">
                         <figure class="thumbnail" style="padding-top: 20px;">
-                            <img id="avatarPreview" class="img-responsive"  style="max-height: 200px; max-width: 250px"
+                            <img id="avatarPreview" class="img-responsive" style="max-height: 200px; max-width: 250px"
                                  src="/default-avatar.jpg"/>
                             <figcaption class="text-center">
                                 <label for="avatar">Avatar</label>
@@ -91,8 +94,8 @@
 
 </div><!-- /.container -->
 
-<%- include("../partials/footer.ejs") %>
-<script src="/shared/validators/userValidator.js"></script>
+<%- include("../../../partials/footer.ejs") %>
+<script src="/src/sharedared/validators/userValidator.js"></script>
 <script src="/avatar.js"></script>
 
 <script>
@@ -114,47 +117,57 @@
         $("form").submit(function (event) {
             $(":submit").attr("disabled", true);
 
-            var email = $("#email").val();
-            var oldPassword = $("#oldPassword").val();
-            var password = $("#password").val();
-            var confirmPassword = $("#confirmPassword").val();
+            var userId = $("form [name=userId]").val();
+            var username = $("form [name=username]").val();
+            var email = $("form [name=email]").val();
+            var password = $("form [name=password]").val();
+            var confirmPassword = $("form [name=confirmPassword]").val();
 
             var data = new FormData(this);
 
-            var validationResult = UserValidator.validateNewPasswordChange(password, confirmPassword, oldPassword);
+            var validationResult = UserValidator.validateNewPassword(password, confirmPassword);
             validationResult = validationResult.valid ? UserValidator.validateEmail(email) : validationResult;
 
             if (data.get('avatar') && validationResult.valid) {
                 validationResult = UserValidator.validateAvatar(data.get('avatar'));
             }
+
+            if (data.get('enabled') == null) {
+                data.set('enabled', 'no');
+            }
+
             if (!validationResult.valid) {
                 alert(validationResult.message);
+                $(":submit").attr("disabled", false);
                 return;
             }
 
 
             $.ajax({
                 type: "PUT",
-                url: '/api/user',
+                url: '/api/user/' + userId,
                 contentType: false,
                 processData: false,
                 data: data,
                 success: function (result) {
                     if (result.success) {
-                        alert("Update successful");
+                        location.href = "/users";
                     } else {
-                        alert("There was an error while updating your profile - " + result.error);
+                        console.log(result.error);
+                        alert("There was an error while saving new user data");
                     }
-
                     $(":submit").attr("disabled", false);
                 }
             });
 
+
             <% if (google_id!=undefined) { %>
-            ga('send', 'event', 'Profile', 'edit', '<%=editUser.username%>');
+            ga('send', 'event', 'User', 'edit', '<%=editUser.username%>');
             <% } %>
         });
+
     });
+
 </script>
 </body>
 </html>
